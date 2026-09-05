@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070707" />
+  <meta name="description" content="半程温柔，予你余生 — 极简黑白电影感音乐播放器" />
+  <title>半程温柔，予你余生</title>
+  <link rel="preload" href="assets/cover.jpg" as="image" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+  <div class="ambient-photo" aria-hidden="true"></div>
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <main class="app" aria-label="音乐播放器">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PRIVATE RECORD · 2026</p>
+        <h1>半程温柔，予你余生</h1>
+      </div>
+      <button id="letterButton" class="icon-btn letter-btn" type="button" aria-label="打开情书" hidden>
+        <span aria-hidden="true">✉</span>
+      </button>
+    </header>
+
+    <section class="record-stage" aria-label="唱片封面">
+      <button id="recordButton" class="record" type="button" aria-label="播放或暂停">
+        <span class="record-image" aria-hidden="true"></span>
+        <span class="record-gloss" aria-hidden="true"></span>
+        <span class="record-hole" aria-hidden="true"></span>
+      </button>
+      <p id="tapHint" class="tap-hint">轻触唱片 · 播放</p>
+    </section>
+
+    <section class="lyrics-wrap" aria-live="polite" aria-label="同步歌词">
+      <p id="sectionLabel" class="section-label">VERSE</p>
+      <div id="lyrics" class="lyrics"></div>
+    </section>
+
+    <section class="transport" aria-label="播放控制">
+      <div class="progress-row">
+        <span id="currentTime">00:00</span>
+        <input id="progress" class="progress" type="range" min="0" max="1000" value="0" aria-label="播放进度" />
+        <span id="duration">03:41</span>
+      </div>
+
+      <div class="controls">
+        <button id="backButton" class="control-btn secondary" type="button" aria-label="后退10秒">−10</button>
+        <button id="playButton" class="control-btn play" type="button" aria-label="播放">
+          <span id="playIcon" aria-hidden="true">▶</span>
+        </button>
+        <button id="forwardButton" class="control-btn secondary" type="button" aria-label="前进10秒">+10</button>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      <span>HEADPHONES RECOMMENDED</span>
+      <span>✦</span>
+      <span>TO THE ONE I CHOOSE</span>
+    </footer>
+  </main>
+
+  <audio id="audio" preload="metadata" src="assets/half-gentle-rest-of-life.mp3"></audio>
+
+  <dialog id="letterDialog" class="letter-dialog">
+    <article class="letter-paper">
+      <button id="closeLetter" class="close-letter" type="button" aria-label="关闭情书">×</button>
+      <p class="letter-kicker">A LETTER, FINALLY OPENED</p>
+      <h2>致你：</h2>
+      <div class="letter-body">
+        <p>半年像一封终于拆开的信。那些被风吹散、没能好好说完的话，我都藏进了这首歌里。</p>
+        <p>我曾把心事结成冻雨，也把千言万语揉成雪。不是没有牵念，只是太笨拙，常常站在很远的渡口。</p>
+        <p>如果往后还有很多个春分与秋分，我希望不再隔岸看你。愿把迟到的温柔慢慢酿成酒，陪你把日子一杯一杯饮尽。</p>
+        <p>渡过半生风雨，此后，只愿与你，共赴余生。</p>
+      </div>
+      <div class="signature">
+        <span>always,</span>
+        <strong>我</strong>
+      </div>
+      <div class="wax-seal" aria-hidden="true">余</div>
+    </article>
+  </dialog>
+
+  <script src="analytics.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
