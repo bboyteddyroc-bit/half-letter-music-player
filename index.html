@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#070707" />
+  <meta name="theme-color" content="#01847F" />
   <meta name="description" content="半程温柔，予你余生 — 极简黑白电影感音乐播放器" />
   <title>半程温柔，予你余生</title>
   <link rel="preload" href="assets/cover.jpg" as="image" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=manual-rose-1" />
 </head>
 <body>
   <canvas id="particleCanvas" aria-hidden="true"></canvas>
@@ -35,9 +35,9 @@
       <p id="tapHint" class="tap-hint">轻触唱片 · 播放</p>
     </section>
 
-    <section class="lyrics-wrap" aria-live="polite" aria-label="同步歌词">
-      <p id="sectionLabel" class="section-label">VERSE</p>
-      <div id="lyrics" class="lyrics"></div>
+    <section class="lyrics-wrap" aria-label="歌词，手动上下滑动">
+      <p id="sectionLabel" class="section-label">歌词 · 上下滑动</p>
+      <div id="lyrics" class="lyrics" tabindex="0" role="region" aria-label="完整歌词，可上下滚动"></div>
     </section>
 
     <section class="transport" aria-label="播放控制">
@@ -82,6 +82,6 @@
   </dialog>
 
   <script src="analytics.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=manual-rose-1"></script>
 </body>
 </html>

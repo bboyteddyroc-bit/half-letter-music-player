@@ -27,3 +27,29 @@ if (GA_MEASUREMENT_ID && /^G-[A-Z0-9]+$/i.test(GA_MEASUREMENT_ID)) {
     anonymize_ip: true
   });
 }
+
+// Events remain inactive until the owner's Measurement ID is configured.
+document.addEventListener('DOMContentLoaded', () => {
+  const track = (name, params = {}) => {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params);
+  };
+  const media = document.getElementById('audio');
+  let started = false;
+  media.addEventListener('play', () => {
+    track(started ? 'music_resume' : 'music_start');
+    started = true;
+  });
+  media.addEventListener('ended', () => {
+    track('music_complete');
+    started = false;
+  });
+  for (const id of ['recordButton', 'playButton', 'backButton', 'forwardButton', 'letterButton']) {
+    document.getElementById(id).addEventListener('click', () => track('player_click', { control: id }));
+  }
+  const dialog = document.getElementById('letterDialog');
+  let opened = dialog.open;
+  new MutationObserver(() => {
+    if (dialog.open && !opened) track('letter_open');
+    opened = dialog.open;
+  }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+});

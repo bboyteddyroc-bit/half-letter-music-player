@@ -14,31 +14,30 @@ const letterDialog = document.getElementById('letterDialog');
 const closeLetter = document.getElementById('closeLetter');
 const letterButton = document.getElementById('letterButton');
 
-// Initial lyric timing, tuned to the supplied 03:41 audio length.
-// If you want frame-perfect sync later, only edit the `time` values below.
+// Lyrics are read manually; playback never changes their position.
 const lyricTimeline = [
-  { time: 14.0, section: 'VERSE', text: '半年是一封拆封的信' },
-  { time: 25.8, section: 'VERSE', text: '风吹散了没说完的话' },
-  { time: 37.7, section: 'VERSE', text: '你要的不过一盏烛火' },
-  { time: 49.6, section: 'VERSE', text: '我却总在很远的渡口' },
-  { time: 61.5, section: 'VERSE', text: '心事结成一场冻雨' },
-  { time: 73.4, section: 'VERSE', text: '落成无人知晓的沉默' },
-  { time: 85.3, section: 'VERSE', text: '千言万语揉成雪' },
-  { time: 97.2, section: 'VERSE', text: '藏进每一次沉默的门锁' },
+  { section: 'VERSE', text: '半年是一封拆封的信' },
+  { section: 'VERSE', text: '风吹散了没说完的话' },
+  { section: 'VERSE', text: '你要的不过一盏烛火' },
+  { section: 'VERSE', text: '我却总在很远的渡口' },
+  { section: 'VERSE', text: '心事结成一场冻雨' },
+  { section: 'VERSE', text: '落成无人知晓的沉默' },
+  { section: 'VERSE', text: '千言万语揉成雪' },
+  { section: 'VERSE', text: '藏进每一次沉默的门锁' },
 
-  { time: 109.1, section: 'CHORUS', text: '原谅我如初雪的心' },
-  { time: 121.0, section: 'CHORUS', text: '落在你眼底融成了冷' },
-  { time: 132.9, section: 'CHORUS', text: '所有牵念藏在灯火阑珊处' },
-  { time: 144.8, section: 'CHORUS', text: '从未松开那年的手心' },
-  { time: 156.7, section: 'CHORUS', text: '往后所有春分与秋分' },
-  { time: 168.6, section: 'CHORUS', text: '把笨拙的温柔都酿成酒' },
-  { time: 180.5, section: 'CHORUS', text: '陪你饮尽' },
+  { section: 'CHORUS', text: '原谅我如初雪的心' },
+  { section: 'CHORUS', text: '落在你眼底融成了冷' },
+  { section: 'CHORUS', text: '所有牵念藏在灯火阑珊处' },
+  { section: 'CHORUS', text: '从未松开那年的手心' },
+  { section: 'CHORUS', text: '往后所有春分与秋分' },
+  { section: 'CHORUS', text: '把笨拙的温柔都酿成酒' },
+  { section: 'CHORUS', text: '陪你饮尽' },
 
-  { time: 192.4, section: 'OUTRO', text: '渡过半生风雨' },
-  { time: 204.3, section: 'OUTRO', text: '此后 只愿与你 共赴余生' }
+  { section: 'OUTRO', text: '渡过半生风雨' },
+  { section: 'OUTRO', text: '此后 只愿与你 共赴余生' }
 ];
 
-let currentLyricIndex = -1;
+
 let hasStarted = false;
 let letterUnlocked = false;
 
@@ -61,36 +60,6 @@ function buildLyrics() {
   lyricsEl.appendChild(frag);
 }
 
-function findLyricIndex(time) {
-  let index = -1;
-  for (let i = 0; i < lyricTimeline.length; i++) {
-    if (time >= lyricTimeline[i].time) index = i;
-    else break;
-  }
-  return index;
-}
-
-function updateLyrics(force = false) {
-  const nextIndex = findLyricIndex(audio.currentTime);
-  if (!force && nextIndex === currentLyricIndex) return;
-  currentLyricIndex = nextIndex;
-
-  const lines = [...lyricsEl.querySelectorAll('.lyric-line')];
-  lines.forEach((line, index) => {
-    const distance = Math.abs(index - currentLyricIndex);
-    line.classList.toggle('is-active', index === currentLyricIndex);
-    line.classList.toggle('is-near', distance === 1);
-  });
-
-  const visualIndex = Math.max(0, currentLyricIndex);
-  const rowHeight = window.innerHeight <= 720 ? 33 : 41;
-  const targetOffset = visualIndex * rowHeight;
-  lyricsEl.style.transform = `translateY(${-targetOffset}px)`;
-
-  const section = currentLyricIndex >= 0 ? lyricTimeline[currentLyricIndex].section : 'VERSE';
-  sectionLabel.textContent = section;
-}
-
 function updateProgress() {
   const duration = audio.duration || 221.4;
   const ratio = duration ? audio.currentTime / duration : 0;
@@ -98,7 +67,7 @@ function updateProgress() {
   progress.style.setProperty('--progress', `${ratio * 100}%`);
   currentTimeEl.textContent = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(duration);
-  updateLyrics();
+
 }
 
 async function togglePlayback() {
@@ -165,7 +134,7 @@ audio.addEventListener('ended', () => {
   setTimeout(openLetter, 650);
 });
 
-window.addEventListener('resize', () => updateLyrics(true));
+
 
 // Media Session makes lock-screen controls feel native on supported phones.
 if ('mediaSession' in navigator) {
@@ -186,7 +155,7 @@ if ('mediaSession' in navigator) {
 }
 
 buildLyrics();
-updateLyrics(true);
+
 updateProgress();
 
 // --- Click / touch star & snow particles ---
