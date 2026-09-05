@@ -9,7 +9,7 @@
  * 2) Paste your Measurement ID below (example: G-ABC1234567).
  * 3) Push the change. Page views will appear in GA4 Reports / Realtime.
  */
-const GA_MEASUREMENT_ID = '';
+const GA_MEASUREMENT_ID = 'G-X8713E4GB8';
 
 if (GA_MEASUREMENT_ID && /^G-[A-Z0-9]+$/i.test(GA_MEASUREMENT_ID)) {
   window.dataLayer = window.dataLayer || [];
